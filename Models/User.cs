@@ -17,9 +17,6 @@ namespace MicroserviceEnlistment.Models
         [MaxLength(200, ErrorMessage = "El campo {0} debe tener máximo {1} caractéres.")]
         public string Address { get; set; }
 
-        [Display(Name = "Foto")]
-        public string Photo { get; set; }
-
         public string TypeOfDocument { get; set; }
 
         public string Document { get; set; }

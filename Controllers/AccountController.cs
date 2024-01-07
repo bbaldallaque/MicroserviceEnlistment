@@ -13,13 +13,31 @@ namespace MicroserviceEnlistment.Controllers
     [Produces("application/json")]
     public class AccountController : ControllerBase
     {
+        private readonly ILogger<AccountController> _logger;
         private readonly IUserService _userService;
         private readonly UserContext _context;
 
-        public AccountController(IUserService userService, UserContext context)
+        public AccountController(ILogger<AccountController> logger, IUserService userService, UserContext context)
         {
+            _logger = logger;
             _userService = userService;
             _context = context;
+        }
+
+        [HttpGet]
+        [Route("CreateDatabase")]
+        public IActionResult CreateDatabase()
+        {
+            try
+            {
+                _logger.LogInformation("Creando base de datos");
+                return Ok(_context.Database.EnsureCreated());
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error creando base de datos {ex.Message}");
+                return BadRequest(ex.Message);
+            }
         }
 
         /// <summary>
